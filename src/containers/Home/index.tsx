@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import { Button } from "antd";
+import history from "../../routers/history";
 import './index.scss';
 import "./index.less";
 
@@ -26,6 +27,16 @@ class Home extends PureComponent<Props, State> {
         >
           Ant Design
         </Button>
+        <h1>React-Router</h1>
+        <Button
+          onClick={() => {
+            history.push("/notFound");
+          }}
+        >
+          NotFound Page
+        </Button>
+        <h1>嵌套路由（在react-js-template中查看）</h1>
+        <Button type="primary" href="https://github.com/CGGoodNight/react-js-template" target="__blank">点击前往</Button>
       </div>
     );
   }

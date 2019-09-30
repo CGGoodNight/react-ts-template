@@ -1,12 +1,10 @@
 import React from 'react';
-import Home from "./containers/Home";
+import AppRouter from "./routers";
 import './App.css';
 
 const App: React.FC = () => {
   return (
-    <div>
-      <Home />
-    </div>
+    <AppRouter />
   );
 }
 
