@@ -72,6 +72,9 @@ class Home extends PureComponent<Props, State> {
         >
           NotFound Page
         </Button>
+        <Button onClick={() => {history.open("/notFound")}}>
+          新标签页打开 NotFound Page
+        </Button>
         <h1>嵌套路由（在react-js-template中查看）</h1>
         <Button type="primary" href="https://github.com/CGGoodNight/react-js-template" target="__blank">点击前往</Button>
         <h1>React-Redux(saga thunk 自己安装配置即可 , 模版已经搭好)</h1>
