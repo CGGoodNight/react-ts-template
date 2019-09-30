@@ -1,21 +1,27 @@
 import React, {PureComponent} from 'react';
-import { Button } from "antd";
+import { Button, DatePicker } from "antd";
 import { connect } from "react-redux";
 import * as Action from "./action";
 import history from "../../routers/history";
 import axios from "axios";
+import * as languageAction from "../LocaleProvider/action";
+import { LanguageBo } from "../../models/bo/languageBo";
+import languageType from "../../constants/languageType";
+import { FormattedMessage, injectIntl } from "react-intl";
 import './index.scss';
 import "./index.less";
 
 interface Props {
   count: number;
+  language: string;
+  intl: any;
   addCount: () => void;
+  switchLanguage: (payload: LanguageBo) => void;
 };
 interface State{
   name: string;
   version: string;
 };
-
 class Home extends PureComponent<Props, State> {
   constructor(props: Props){
     super(props);
@@ -24,6 +30,9 @@ class Home extends PureComponent<Props, State> {
       version: "",
     }
   }
+  public handleSwitchLanguage = () => {
+    this.props.switchLanguage({ language: this.props.language === "zh" ? languageType.EN : languageType.ZH });
+  };
   public  fetchVersion = () => {
     axios({
       method: "GET",
@@ -39,6 +48,8 @@ class Home extends PureComponent<Props, State> {
     });
   };
   public render() {
+    const { messages } = this.props.intl;
+    const { intl } = this.props;
     return (
       <div className="home">
         <h1>Sass</h1>
@@ -70,16 +81,45 @@ class Home extends PureComponent<Props, State> {
         <Button onClick={this.fetchVersion}>获取版本</Button>
         <p>name: {this.state.name ? this.state.name : "默认"}</p>
         <p>version: {this.state.version ? this.state.version : "默认"}</p>
+        <h1>react-intl 实现国际化 & Antd ConfigProvider</h1>
+        <p>通过注入props(无参)</p>
+        <Button onClick={this.handleSwitchLanguage}>
+          {messages["home.switchLanguage"]}
+        </Button>
+        <p>
+          通过FormattedMessage:{" "}
+          <FormattedMessage
+            id="home.introduce"
+            values={{ age: 17, name: <span className="name">Evelyn</span> }}
+          />
+        </p>
+        <p>
+          通过注入props(有参, 不能像FormattedMessage那样传递jsx):{" "}
+          {intl.formatMessage(
+            { id: "home.introduce" },
+            { age: 17, name: "Evelyn" }
+          )}
+        </p>
+        <div>
+          <p>Antd</p>
+          <DatePicker />
+        </div>
+        <h1>支持Hooks(react 16.8 +)</h1>
+        <Button href="https://react-1251415695.cos-website.ap-chengdu.myqcloud.com/docs/hooks-intro.html" target="__blank" type="primary">学习Hook</Button>
       </div>
     );
   }
 }
 const mapStateToProps = (state: any) => ({
-  count: state.homeReducer.count
+  count: state.homeReducer.count,
+  language: state.languageReducer.language
 });
 const mapDispatchToProps = (dispatch: any) => ({
   addCount() {
     dispatch(Action.addCount());
+  },
+  switchLanguage(payload: LanguageBo) {
+    dispatch(languageAction.switchLanguage(payload));
   }
 });
-export default connect(mapStateToProps,mapDispatchToProps)(Home);
+export default connect(mapStateToProps,mapDispatchToProps)(injectIntl(Home as any));
