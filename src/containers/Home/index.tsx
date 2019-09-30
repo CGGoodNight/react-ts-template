@@ -1,10 +1,15 @@
 import React, {PureComponent} from 'react';
 import { Button } from "antd";
+import { connect } from "react-redux";
+import * as Action from "./action";
 import history from "../../routers/history";
 import './index.scss';
 import "./index.less";
 
-interface Props {};
+interface Props {
+  count: number;
+  addCount: () => void;
+};
 interface State{};
 
 class Home extends PureComponent<Props, State> {
@@ -37,9 +42,19 @@ class Home extends PureComponent<Props, State> {
         </Button>
         <h1>嵌套路由（在react-js-template中查看）</h1>
         <Button type="primary" href="https://github.com/CGGoodNight/react-js-template" target="__blank">点击前往</Button>
+        <h1>React-Redux(saga thunk 自己安装配置即可 , 模版已经搭好)</h1>
+        count: {this.props.count}
+        <Button onClick={() => this.props.addCount()}>+</Button>
       </div>
     );
   }
 }
-
-export default Home;
+const mapStateToProps = (state: any) => ({
+  count: state.homeReducer.count
+});
+const mapDispatchToProps = (dispatch: any) => ({
+  addCount() {
+    dispatch(Action.addCount());
+  }
+});
+export default connect(mapStateToProps,mapDispatchToProps)(Home);
