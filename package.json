@@ -11,6 +11,7 @@
     "@types/react-dom": "16.9.1",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
+    "antd": "^3.23.5",
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
@@ -135,9 +136,20 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": true
+        }
+      ]
     ]
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.12.2",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "node-sass": "^4.12.0"

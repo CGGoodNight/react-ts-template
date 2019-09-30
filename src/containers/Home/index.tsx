@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import { Button } from "antd";
 import './index.scss';
 import "./index.less";
 
@@ -17,6 +18,14 @@ class Home extends PureComponent<Props, State> {
         <p className="style-sass">HomePage</p>
         <h1>Less</h1>
         <p className="style-less">HomePage</p>
+        <h1>Ant Design(定制主题更多样式请点击)</h1>
+        <Button
+          href="https://ant.design/docs/react/customize-theme-cn"
+          target="__blank"
+          type="primary"
+        >
+          Ant Design
+        </Button>
       </div>
     );
   }
